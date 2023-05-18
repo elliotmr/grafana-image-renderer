@@ -143,10 +143,21 @@ export class HttpServer {
       throw boom.badRequest('Missing url parameter');
     }
 
+    if (this.config.service.security.allowedCallbackHost) {
+      const url = new URL(req.query.url);
+      if (!url.host.match(this.config.service.security.allowedCallbackHost)) {
+        throw boom.badRequest('callback host does not match allowed host regex');
+      }
+    }
+
     const headers: HTTPHeaders = {};
 
     if (req.headers['Accept-Language']) {
       headers['Accept-Language'] = (req.headers['Accept-Language'] as string[]).join(';');
+    }
+
+    if (this.config.service.security.callbackAuthHeader) {
+      headers['Authorization'] = this.config.service.security.callbackAuthHeader;
     }
 
     const options: ImageRenderOptions = {

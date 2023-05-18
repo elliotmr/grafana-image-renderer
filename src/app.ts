@@ -113,6 +113,14 @@ function populateServiceConfigFromEnv(config: ServiceConfig, env: NodeJS.Process
     config.service.security.authToken = authToken.includes(' ') ? authToken.split(' ') : authToken;
   }
 
+  if (env['CALLBACK_AUTH_HEADER']) {
+    config.service.security.callbackAuthHeader = env['CALLBACK_AUTH_HEADER'] as string;
+  }
+
+  if (env['ALLOWED_CALLBACK_HOST']) {
+    config.service.security.allowedCallbackHost = env['ALLOWED_CALLBACK_HOST'] as string;
+  }
+
   if (env['LOG_LEVEL']) {
     config.service.logging.level = env['LOG_LEVEL'] as string;
   }

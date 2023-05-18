@@ -57,6 +57,8 @@ export interface LoggingConfig {
 
 export interface SecurityConfig {
   authToken: string | string[];
+  callbackAuthHeader?: string;
+  allowedCallbackHost?: string;
 }
 
 export interface ServiceConfig {
